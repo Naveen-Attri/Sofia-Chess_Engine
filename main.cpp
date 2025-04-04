@@ -22,7 +22,7 @@ int main() {
     S_MOVELIST movelist{};
     S_SEARCHINFO info{};
 
-    parseFEN(PERFTTEST7, &board);
+    parseFEN(WAC2, &board);
     std::string input;
     int move = NOMOVE;
     int pvNum = 0;

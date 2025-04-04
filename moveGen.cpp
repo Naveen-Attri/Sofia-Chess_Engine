@@ -346,4 +346,128 @@ void generateAllMoves(const S_BOARD* board, S_MOVELIST* list) {
     }
 }
 
+void generateAllCaps(const S_BOARD* board, S_MOVELIST* list) {
+    assert(checkBoard(board));
+
+    list->count = 0;
+
+    int pce{EMPTY};
+    int side = board->side;
+    int sq{};
+    int t_sq{};
+    int pceIndex{};
+//    int pceNum{};
+
+    if (board->side == WHITE) {
+        for (int pceCount = 0; pceCount < board->pceNum[wP]; pceCount++) {
+            sq = board->pList[wP][pceCount];
+            assert(sqOnBoard(sq));
+
+            if (not SQOFFBOARD(sq + 9) and pieceCol[board->pieces[sq + 9]] == BLACK) {
+                addWhitePawnCapMove(board, sq, sq + 9, board->pieces[sq + 9], list);
+            }
+
+            if (not SQOFFBOARD(sq + 11) and pieceCol[board->pieces[sq + 11]] == BLACK) {
+                addWhitePawnCapMove(board, sq, sq + 11, board->pieces[sq + 11], list);
+            }
+
+
+            if (board->enPas != NO_SQ)
+            {
+                if (sq + 9 == board->enPas) {
+                    addEnPassantMove(board, move(sq, (sq + 9), EMPTY, EMPTY, MFLAGEP), list);
+                }
+
+                if (sq + 11 == board->enPas) {
+                    addEnPassantMove(board, move(sq, (sq + 11), EMPTY, EMPTY, MFLAGEP), list);
+                }
+            }
+        }
+
+    } else if (side == BLACK) {
+
+        for (int pceCount = 0; pceCount < board->pceNum[bP]; pceCount++) {
+            sq = board->pList[bP][pceCount];
+            assert(sqOnBoard(sq));
+
+            if (not SQOFFBOARD(sq - 9) and pieceCol[board->pieces[sq - 9]] == WHITE) {
+                addBlackPawnCapMove(board, sq, sq - 9, board->pieces[sq - 9], list);
+            }
+
+            if (not SQOFFBOARD(sq - 11) and pieceCol[board->pieces[sq - 11]] == WHITE) {
+                addBlackPawnCapMove(board, sq, sq - 11, board->pieces[sq - 11], list);
+            }
+
+
+            if (board->enPas != NO_SQ)
+            {
+                if (sq - 9 == board->enPas) {
+                    addEnPassantMove(board, move(sq, (sq - 9), EMPTY, EMPTY, MFLAGEP), list);
+                }
+
+                if (sq - 11 == board->enPas) {
+                    addEnPassantMove(board, move(sq, (sq - 11), EMPTY, EMPTY, MFLAGEP), list);
+                }
+            }
+        }
+    }
+
+    //loop through sliding pieces
+    pceIndex = slidePceIndex[side];
+    pce = loopSlidePce[pceIndex++];
+
+    while(pce != 0){
+        assert(pieceValid(pce));
+
+        for (int pceNum = 0; pceNum < board -> pceNum[pce]; ++pceNum) {
+            sq = board -> pList[pce][pceNum];
+            assert(sqOnBoard(sq));
+
+            for(int dirIndex = 0; dirIndex < numDir[pce]; dirIndex++) {
+                int targetSq = sq + pceDir[pce][dirIndex];
+
+                while(not SQOFFBOARD(targetSq)) {
+                    if(board -> pieces[targetSq] != EMPTY) {
+                        if(pieceCol[board -> pieces[targetSq]] != side) {
+                            addCaptureMove(board, move(sq, targetSq, board -> pieces[targetSq], EMPTY, 0), list);
+                        }
+                        break;
+                    }
+                    targetSq += pceDir[pce][dirIndex];
+                }
+            }
+        }
+
+        pce = loopSlidePce[pceIndex++];
+    }
+
+    //loop through non-sliding pieces
+    pceIndex = nonSlidePceIndex[side];
+    pce = loopNonSlidePce[pceIndex++];
+
+    while(pce != 0){
+        assert(pieceValid(pce));
+
+        for(int pceNum = 0; pceNum < board->pceNum[pce]; pceNum++) {
+            sq = board -> pList[pce][pceNum];
+            assert(sqOnBoard(sq));
+
+            for(int index = 0; index < numDir[pce]; index++) {
+                int targetSq = sq + pceDir[pce][index];
+
+                if(SQOFFBOARD(targetSq)) {
+                    continue;
+                }
+
+                if(board -> pieces[targetSq] != EMPTY) {
+                    if(pieceCol[board -> pieces[targetSq]] != side) {
+                        addCaptureMove(board, move(sq, targetSq, board -> pieces[targetSq], EMPTY, 0), list);
+                    }
+                    continue;
+                }
+            }
+        }
+        pce = loopNonSlidePce[pceIndex++];
+    }
+}
 

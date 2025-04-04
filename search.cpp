@@ -6,9 +6,15 @@
 #define INFINITY 30000
 #define MATE 29000
 
-static void checkUp()
+static void checkUp(S_SEARCHINFO* info)
 {
-    //TODO: check if time up, or interrupt from GUI
+    if (info->stopped != 0) return;
+
+    if ( info->timeset == true and getTimeInMilliseconds() > info->stoptime )
+    {
+        info->stopped = true;
+    }
+    //TODO: check if interrupt from GUI
 }
 
 static void pickNextMove(int moveNum, S_MOVELIST* list)
@@ -72,19 +78,64 @@ static void clearForSearch(S_BOARD *pos, S_SEARCHINFO *info)
 
 static int quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info)
 {
-//     assert(checkBoard(pos));
-//     info->nodes++;
-//
-//     if (isRepetition(pos) or pos->fiftyMove >= 100) return 0;
-//
-//     if (pos->ply > MAXDEPTH - 1) return evalPosition(pos);
-//
-//     int score = evalPosition(pos);
-//
-//     if (alpha != oldAlpha)
-//     {
-//         storePvMove(pos, bestMove);
-//     }
+    assert(checkBoard(pos));
+
+    if (info->nodes & 2047 == 0)
+    {
+        checkUp(info);
+    }
+
+    info->nodes++;
+
+    if (isRepetition(pos) or pos->fiftyMove >= 100) return 0;
+
+    if (pos->ply > MAXDEPTH - 1) return evalPosition(pos);
+
+    int score = evalPosition(pos);
+
+    if (score >= beta) return beta;
+
+    if (score > alpha) alpha = score;
+
+    S_MOVELIST list;
+    generateAllCaps(pos, &list);
+
+    int legal = 0;
+    int oldAlpha = alpha;
+    int bestMove = NOMOVE;
+    score = -INFINITY;
+
+    for (int moveNum = 0; moveNum < list.count; ++moveNum)
+    {
+        pickNextMove(moveNum, &list);
+        if (!makeMove(pos, list.moves[moveNum].move))
+        {
+            continue;
+        }
+        legal++;
+        score = -quiescence(-beta, -alpha, pos, info);
+        takeBack(pos);
+
+        if (info->stopped) return 0;
+
+
+        if (score > alpha)
+        {
+            if (score >= beta)
+            {
+                if (legal == 1) info->fhf++;
+                info->fh++;
+                return beta;
+            }
+            alpha = score;
+            bestMove = list.moves[moveNum].move;
+        }
+    }
+
+     if (alpha != oldAlpha)
+     {
+         storePvMove(pos, bestMove);
+     }
      return alpha;
 }
 
@@ -96,6 +147,11 @@ static int alphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
     {
         return quiescence(alpha, beta, pos, info);
         // return evalPosition(pos);
+    }
+
+    if (info->nodes & 2047 == 0)
+    {
+        checkUp(info);
     }
 
     info->nodes++;
@@ -141,6 +197,8 @@ static int alphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
         legal++;
         score = -alphaBeta(-beta, -alpha, depth-1, pos, info, true);
         takeBack(pos);
+
+        if (info->stopped) return 0;
 
         if (score > alpha)
         {
@@ -193,7 +251,7 @@ void searchPosition(S_BOARD *pos, S_SEARCHINFO *info)
     {
         bestScore = alphaBeta(-INFINITY, INFINITY, currentDepth, pos, info, true);
 
-        //TODO:out of time??
+        if (info->stopped) break;
 
         pvMoves = getPvLine(currentDepth, pos);
         bestMove = pos->pvArray[0];
@@ -212,4 +270,7 @@ void searchPosition(S_BOARD *pos, S_SEARCHINFO *info)
         std::cout <<"MoveOrdering: " <<std::setprecision(2) << (info->fhf / info->fh)<< std::endl;
     }
 }
+
+
+
 

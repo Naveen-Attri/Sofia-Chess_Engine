@@ -176,18 +176,18 @@ public:
 
 typedef struct
 {
-    unsigned long long starttime;
-    unsigned long long stoptime;
+    uint64_t starttime;
+    uint64_t stoptime;
     int depth;
-    int depthset;
-    int timeset;
+    bool depthset;
+    bool timeset;
     int movestogo;
-    int infinite;
+    bool infinite;
 
     long nodes;
 
-    int quit;
-    int stopped;
+    bool quit;
+    bool stopped;
 
     float fh; //fial high
     float fhf; //fail high first
@@ -309,6 +309,7 @@ extern bool pieceValid(int pce);
 //moveGen.cpp
 extern int initMvvLva();
 extern void generateAllMoves(const S_BOARD *board, S_MOVELIST *list);
+extern void generateAllCaps(const S_BOARD* board, S_MOVELIST* list);
 extern bool moveExists(S_BOARD* pos, int move);
 
 //makeMove.cpp
