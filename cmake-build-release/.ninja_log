@@ -1,0 +1,7 @@
+# ninja log v6
+27	1001	7396976878897407	CMakeFiles/chess.dir/board.cpp.obj	305719f8886c8800
+3	1004	7396976878647459	CMakeFiles/chess.dir/main.cpp.obj	2a96276ab97c31c5
+10	1007	7396976878730302	CMakeFiles/chess.dir/init.cpp.obj	886437b244fdb4c0
+1007	1156	7396976888692591	chess.exe	c3054fe5e5b25a3c
+22	1005	7396976878841026	CMakeFiles/chess.dir/hashkeys.cpp.obj	d4b5fca6ca79dd6e
+16	1006	7396976878791020	CMakeFiles/chess.dir/bitboards.cpp.obj	338ce4d4f1802a04

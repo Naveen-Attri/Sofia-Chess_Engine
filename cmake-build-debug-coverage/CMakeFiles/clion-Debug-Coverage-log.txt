@@ -1,0 +1,4 @@
+C:\Users\attri\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/attri/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage -G Ninja -S C:\Dev\chess -B C:\Dev\chess\cmake-build-debug-coverage
+-- Configuring done (0.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Dev/chess/cmake-build-debug-coverage

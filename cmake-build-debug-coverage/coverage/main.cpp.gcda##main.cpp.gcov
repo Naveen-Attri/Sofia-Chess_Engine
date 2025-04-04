@@ -1,0 +1,98 @@
+        -:    0:Source:C:/dev/chess/main.cpp
+        -:    0:Graph:C:\dev\chess\cmake-build-debug-coverage\CMakeFiles\chess.dir\main.cpp.gcno
+        -:    0:Data:C:\dev\chess\cmake-build-debug-coverage\CMakeFiles\chess.dir\main.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#include "chess.h"
+        -:    2:
+function main called 1 returned 100% blocks executed 100%
+        1:    3: int main() {
+        1:    4:    init();
+        1:    4-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:    5:
+        1:    6:    uint64_t testBitBoard = 0ULL;
+        -:    7:
+        1:    8:    testBitBoard |= 1ULL << SQ64(A2);
+        1:    9:    testBitBoard |= 1ULL << SQ64(B2);
+        1:   10:    testBitBoard |= 1ULL << SQ64(C2);
+        1:   11:    testBitBoard |= 1ULL << SQ64(D2);
+        1:   12:    testBitBoard |= 1ULL << SQ64(E2);
+        1:   13:    testBitBoard |= 1ULL << SQ64(F2);
+        1:   14:    testBitBoard |= 1ULL << SQ64(G2);
+        1:   15:    testBitBoard |= 1ULL << SQ64(H2);
+        1:   16:    testBitBoard |= 1ULL << SQ64(A7);
+        1:   17:    testBitBoard |= 1ULL << SQ64(B7);
+        1:   18:    testBitBoard |= 1ULL << SQ64(C7);
+        1:   19:    testBitBoard |= 1ULL << SQ64(D7);
+        1:   20:    testBitBoard |= 1ULL << SQ64(E7);
+        1:   21:    testBitBoard |= 1ULL << SQ64(F7);
+        1:   22:    testBitBoard |= 1ULL << SQ64(G7);
+        1:   23:    testBitBoard |= 1ULL << SQ64(H7);
+        -:   24:
+        1:   25:    printBitBoard(testBitBoard);
+        1:   25-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   26:
+        1:   27:    std::cout << std::endl;
+        1:   27-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   28:
+        1:   29:    int count = CNT(testBitBoard);
+        1:   29-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   30:    std::cout << "count: " << count << std::endl;
+        1:   30-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   30-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   30-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        -:   31:
+        1:   32:    int index = POP(&testBitBoard);
+        1:   32-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   33:    std::cout << "index: " << index << std::endl;
+        1:   33-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   33-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   33-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   34:    std::cout << std::endl;
+        1:   34-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   35:
+        1:   36:     printBitBoard(testBitBoard);
+        1:   36-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   37:
+        -:   38:
+        1:   39:    return 0;
+        1:   39-block  0
+        -:   40:}

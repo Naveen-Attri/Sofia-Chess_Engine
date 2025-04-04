@@ -1,0 +1,92 @@
+        -:    0:Source:C:/dev/chess/init.cpp
+        -:    0:Graph:C:\dev\chess\cmake-build-debug-coverage\CMakeFiles\chess.dir\init.cpp.gcno
+        -:    0:Data:C:\dev\chess\cmake-build-debug-coverage\CMakeFiles\chess.dir\init.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#include "chess.h"
+        -:    2:
+        -:    3:int sq120tosq64[BRD_SQ_NUM];
+        -:    4:int sq64tosq120[64];
+        -:    5:
+        -:    6:uint64_t setMask[64];
+        -:    7:uintptr_t clearMask[64];
+        -:    8:
+function _Z11initBitMaskv called 1 returned 100% blocks executed 100%
+        1:    9:void initBitMask(){
+        -:   10:    //initialize the bitmasks to 0
+       65:   11:    for(int index = 0; index < 64; index++){
+        1:   11-block  0
+       65:   11-block  1
+branch  0 taken 64
+branch  1 taken 1 (fallthrough)
+       64:   12:        setMask[index] = 0ULL;
+       64:   13:        clearMask[index] = 0ULL;
+       64:   13-block  0
+        -:   14:    }
+        -:   15:
+        -:   16:    //set the masks
+       65:   17:    for (int index = 0; index < 64; ++index) {
+        1:   17-block  0
+       65:   17-block  1
+branch  0 taken 64
+branch  1 taken 1 (fallthrough)
+       64:   18:        setMask[index] |= (1ULL) << index;
+       64:   19:        clearMask[index] = ~setMask[index];
+       64:   19-block  0
+        -:   20:    }
+        1:   21:}
+        -:   22:
+function _Z13initSq120To64v called 1 returned 100% blocks executed 100%
+        1:   23:void initSq120To64(){
+        1:   24:    int index = 0;
+        1:   25:    int file = FILE_A;
+        1:   26:    int rank = RANK_1;
+        1:   27:    int sq = A1;
+        1:   28:    int sq64 = 0;
+        -:   29:
+      121:   30:    for(index = 0; index < BRD_SQ_NUM; ++index){
+        1:   30-block  0
+      121:   30-block  1
+branch  0 taken 120
+branch  1 taken 1 (fallthrough)
+      120:   31:        sq120tosq64[index] = 65;
+      120:   31-block  0
+        -:   32:    }
+        -:   33:
+       65:   34:    for(index = 0; index < 64; ++index){
+        1:   34-block  0
+       65:   34-block  1
+branch  0 taken 64
+branch  1 taken 1 (fallthrough)
+       64:   35:        sq64tosq120[index] = 120;
+       64:   35-block  0
+        -:   36:    }
+        -:   37:
+        9:   38:    for(rank = RANK_1; rank <= RANK_8; ++rank){
+        1:   38-block  0
+        8:   38-block  1
+        9:   38-block  2
+branch  0 taken 8
+branch  1 taken 1 (fallthrough)
+       72:   39:        for(file = FILE_A; file <= FILE_H; ++file){
+        8:   39-block  0
+       72:   39-block  1
+branch  0 taken 64
+branch  1 taken 8 (fallthrough)
+       64:   40:            sq = FR2SQ(file, rank);
+       64:   41:            sq64tosq120[sq64] = sq;
+       64:   42:            sq120tosq64[sq] = sq64;
+       64:   43:            sq64++;
+       64:   43-block  0
+        -:   44:        }
+        -:   45:    }
+        1:   46:}
+        -:   47:
+        -:   48:
+function _Z4initv called 1 returned 100% blocks executed 100%
+        1:   49:void init(){
+        1:   50:    initSq120To64();
+        1:   50-block  0
+call    0 returned 1
+        1:   51:    initBitMask();
+call    0 returned 1
+        1:   52:}

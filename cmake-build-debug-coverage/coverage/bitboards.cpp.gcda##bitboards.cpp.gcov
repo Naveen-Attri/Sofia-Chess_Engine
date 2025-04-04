@@ -1,0 +1,85 @@
+        -:    0:Source:C:/dev/chess/bitboards.cpp
+        -:    0:Graph:C:\dev\chess\cmake-build-debug-coverage\CMakeFiles\chess.dir\bitboards.cpp.gcno
+        -:    0:Data:C:\dev\chess\cmake-build-debug-coverage\CMakeFiles\chess.dir\bitboards.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#include "iostream"
+        -:    2:#include "chess.h"
+        -:    3:
+        -:    4:const int bitTable[64] = {
+        -:    5:        63, 30, 3, 32, 25, 41, 22, 33,
+        -:    6:        15, 50, 42, 13, 11, 53, 19, 34,
+        -:    7:        61, 29, 2, 51, 21, 43, 45, 10,
+        -:    8:        18, 47, 1, 54, 9, 57, 0, 35,
+        -:    9:        62, 31, 40, 4, 49, 5, 52, 26,
+        -:   10:        60, 6, 23, 44, 46, 27, 56, 16,
+        -:   11:        7, 39, 48, 24, 59, 14, 12, 55,
+        -:   12:        38, 28, 58, 20, 37, 17, 36, 8
+        -:   13:};
+        -:   14:
+function _Z6popBitPy called 1 returned 100% blocks executed 100%
+        1:   15:int popBit(uint64_t *bb) {
+        1:   16:    uint64_t b = *bb ^ (*bb - 1);
+        1:   17:    uint32_t fold = (unsigned) ((b & 0xffffffff) ^ (b >> 32));
+        1:   18:    *bb &= (*bb - 1);
+        1:   19:    return bitTable[(fold * 0x783a9b23) >> 26];
+        1:   19-block  0
+        -:   20:}
+        -:   21:
+function _Z9countBitsy called 1 returned 100% blocks executed 100%
+        1:   22:int countBits(uint64_t bb) {
+        -:   23:    int r;
+       17:   24:    for (r = 0; bb; r++, bb &= bb - 1);
+        1:   24-block  0
+       16:   24-block  1
+       17:   24-block  2
+branch  0 taken 16
+branch  1 taken 1 (fallthrough)
+        1:   25:    return r;
+        1:   25-block  0
+        -:   26:}
+        -:   27:
+        -:   28:
+function _Z13printBitBoardy called 2 returned 100% blocks executed 100%
+        2:   29:void printBitBoard(uint64_t bitBoard){
+        -:   30:
+        2:   31:    uint64_t shiftMe = 1ULL;
+        -:   32:
+        -:   33:    //print the board from the top left corner
+       18:   34:    for (int rank = RANK_8; rank >= RANK_1; --rank) {
+        2:   34-block  0
+       18:   34-block  1
+branch  0 taken 16
+branch  1 taken 2 (fallthrough)
+      144:   35:        for (int file = FILE_A; file <= FILE_H; ++file) {
+       16:   35-block  0
+      128:   35-block  1
+      144:   35-block  2
+branch  0 taken 128
+branch  1 taken 16 (fallthrough)
+      128:   36:            int sq = FR2SQ(file, rank);
+      128:   37:            int sq64 = SQ64(sq);
+        -:   38:
+      128:   39:            if ((shiftMe << sq64) & bitBoard) {
+      128:   39-block  0
+branch  0 taken 31 (fallthrough)
+branch  1 taken 97
+       31:   40:                std::cout << std::setw(5) << "X";
+       31:   40-block  0
+call    0 returned 31
+call    1 returned 31
+call    2 returned 31
+        -:   41:            }
+        -:   42:            else {
+       97:   43:                std::cout << std::setw(5) << "-";
+       97:   43-block  0
+call    0 returned 97
+call    1 returned 97
+call    2 returned 97
+        -:   44:            }
+        -:   45:        }
+       16:   46:        std::cout << std::endl;
+       16:   46-block  0
+call    0 returned 16
+        -:   47:
+        -:   48:    }
+        2:   49:}
