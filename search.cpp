@@ -19,8 +19,6 @@ static void checkUp(S_SEARCHINFO* info)
 
 static void pickNextMove(int moveNum, S_MOVELIST* list)
 {
-
-    //TODO: maybe sort the whole list at once based on the score
     int bestScore{};
     int bestNum{};
 
@@ -104,6 +102,19 @@ static int quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info)
     int oldAlpha = alpha;
     int bestMove = NOMOVE;
     score = -INFINITY;
+    // int pvMove = probePvTable(pos);
+    //
+    // if (pvMove != NOMOVE and (pvMove & MFLAGCAP == 1) )
+    // {
+    //     for (int moveNum = 0; moveNum < list.count; ++moveNum)
+    //     {
+    //         if ( list.moves[moveNum].move == pvMove)
+    //         {
+    //             list.moves[moveNum].score = 2000000;
+    //             break;
+    //         }
+    //     }
+    // }
 
     for (int moveNum = 0; moveNum < list.count; ++moveNum)
     {
@@ -256,19 +267,20 @@ void searchPosition(S_BOARD *pos, S_SEARCHINFO *info)
         pvMoves = getPvLine(currentDepth, pos);
         bestMove = pos->pvArray[0];
 
-        std::cout << "Depth: " << currentDepth << std::endl;
-        std::cout << std::dec << "Score: " << bestScore << std::endl;
-        std::cout << "Move: " << prMove(bestMove) << std::endl;
-        std::cout << std::dec << "Node: " << info->nodes << std::endl;
+        //WARNING(for the dev): change the time to integer if gui throws some kind of tantrums;
+        printf("info score cp %d  depth %d nodes %ld time %llu ", bestScore, currentDepth, info->nodes, getTimeInMilliseconds() - info->starttime);
 
-        std::cout << "Pv line: ";
+        std::cout << "pv ";
         for (int pvNum = 0; pvNum < pvMoves; pvNum++)
         {
             int move = pos->pvArray[pvNum];
             std::cout << prMove(move) << " ";
         }
-        std::cout <<"MoveOrdering: " <<std::setprecision(2) << (info->fhf / info->fh)<< std::endl;
+        printf("\n");
+        // std::cout <<"MoveOrdering: " <<std::setprecision(2) << (info->fhf / info->fh)<< std::endl;
     }
+    //info score cp 13  depth 1 nodes 13 time 15 pv f1b5
+    std::cout << "bestMove " << prMove(bestMove) << std::endl;
 }
 
 

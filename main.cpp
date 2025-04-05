@@ -22,7 +22,7 @@ int main() {
     S_MOVELIST movelist{};
     S_SEARCHINFO info{};
 
-    parseFEN(WAC2, &board);
+    parseFEN(PERFTTEST1, &board);
     std::string input;
     int move = NOMOVE;
     int pvNum = 0;
@@ -39,6 +39,8 @@ int main() {
         else if (input == "s")
         {
             info.depth = 6;
+            info.starttime = getTimeInMilliseconds();
+            info.stoptime = getTimeInMilliseconds() + 200000;
             searchPosition(&board, &info);
         }
         else if (input == "p")

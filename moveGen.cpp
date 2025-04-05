@@ -38,7 +38,7 @@ int initMvvLva()
     {
         for (int victim = wP; victim <= bK; victim++)
         {
-            mvvlvaScores[victim][attacker] = victimScore[victim] + 6 - victimScore[attacker] / 100;
+            mvvlvaScores[victim][attacker] = victimScore[victim] + 6 - (victimScore[attacker] / 100);
         }
     }
     return 0;
