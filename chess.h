@@ -11,6 +11,8 @@
 //to remove warnings uncomment the line below
 // or to shut down debug mode
 #define NDEBUG
+//Wanna detect collisions? uncomment the line below
+//#define DETECT_COLLISION
 
 //FOR DEBUGGING
 #include "cassert"

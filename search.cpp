@@ -56,11 +56,11 @@ static void clearForSearch(S_BOARD *pos, S_SEARCHINFO *info)
         }
     }
 
-    for (int idx = 0; idx < 2; idx++)
+    for (auto & searchKiller : pos->searchKillers)
     {
         for (int idx2 = 0; idx2 < MAXDEPTH; ++idx2)
         {
-            pos->searchKillers[idx][idx2] = 0;
+            searchKiller[idx2] = 0;
         }
     }
 
