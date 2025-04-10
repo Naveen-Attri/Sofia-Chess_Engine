@@ -17,55 +17,6 @@
 
 int main() {
     init();
-    S_BOARD board{};
-    initPvTable(board.pvTable);
-    S_MOVELIST movelist{};
-    S_SEARCHINFO info{};
-
-    parseFEN(WAC2, &board);
-    std::string input;
-    int move = NOMOVE;
-    int pvNum = 0;
-    int max = 0;
-
-    while (true)
-    {
-        printBoard(&board);
-        std::cout << "please enter a move: ";
-        std::cin >> input;
-
-        if (input[0] == 'q') break;
-        else if (input[0] == 't') takeBack(&board);
-        else if (input == "s")
-        {
-            info.depth = 6;
-            info.starttime = getTimeInMilliseconds();
-            info.stoptime = getTimeInMilliseconds() + 200000;
-            searchPosition(&board, &info);
-        }
-        else if (input == "p")
-        {
-            int depth{};
-            std::cout << "Enter depth for perft test: ";
-            std::cin >> depth;
-            perftTestMT(depth, &board);
-        }
-        else
-        {
-            int move = parseMove(input, &board);
-            if (move != NOMOVE)
-            {
-                storePvMove(&board, move);
-                makeMove(&board, move);
-                // if (isRepetition(&board)) std::cout << "Repetition" << std::endl;
-            }
-
-            else
-            {
-                std::cout << "Illegal move" << std::endl;
-            }
-        }
-    }
-    free(board.pvTable->pTable);
+    uciLoop();
     return 0;
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#define NAME "Sofia"
 
 #include <cstdint> // for 64-bit integer
 #include <iomanip> // for std::setw function
@@ -22,6 +23,8 @@
 #define MAXGAMEMOVES 2048
 #define MAXPOSITIONMOVES 256
 #define MAXDEPTH 64
+
+#define STARTFEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 //piece list
 enum { EMPTY = 0,
@@ -341,3 +344,6 @@ extern void clearPvTable(S_PVTABLE* table); //clear the pv table
 
 //evaluate.cpp
 extern int evalPosition(const S_BOARD *pos);
+
+//uci.cpp
+extern void uciLoop();

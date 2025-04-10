@@ -20,4 +20,5 @@ add_executable(chess main.cpp
         misc.cpp
         pvtable.cpp
         evaluate.cpp
+        uci.cpp
 )
