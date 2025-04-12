@@ -4,7 +4,7 @@ int sq120tosq64[BRD_SQ_NUM];
 int sq64tosq120[64];
 
 uint64_t setMask[64];
-uintptr_t clearMask[64];
+uint64_t clearMask[64];
 
 uint64_t pieceKeys[13][120];
 uint64_t sideKey;

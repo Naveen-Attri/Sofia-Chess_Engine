@@ -3,18 +3,18 @@
 
 #include "chess.h"
 
-#define INFINITY 30000
+#define CHESS_INFINITY 30000
 #define MATE 29000
 
 static void checkUp(S_SEARCHINFO* info)
 {
     if (info->stopped != 0) return;
 
-    if ( info->timeset == true and getTimeInMilliseconds() > info->stoptime )
+    if ( info->timeset == true and (getTimeInMilliseconds() > info->stoptime) )
     {
         info->stopped = true;
     }
-    //TODO: check if interrupt from GUI
+    readInput(info);
 }
 
 static void pickNextMove(int moveNum, S_MOVELIST* list)
@@ -67,7 +67,6 @@ static void clearForSearch(S_BOARD *pos, S_SEARCHINFO *info)
     clearPvTable(pos->pvTable);
     pos->ply = 0;
 
-    info->starttime = getTimeInMilliseconds();
     info->stopped = 0;
     info->nodes = 0;
     info->fh = 0;
@@ -101,7 +100,7 @@ static int quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info)
     int legal = 0;
     int oldAlpha = alpha;
     int bestMove = NOMOVE;
-    score = -INFINITY;
+    score = -CHESS_INFINITY;
     // int pvMove = probePvTable(pos);
     //
     // if (pvMove != NOMOVE and (pvMove & MFLAGCAP == 1) )
@@ -160,7 +159,7 @@ static int alphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
         // return evalPosition(pos);
     }
 
-    if (info->nodes & 2047 == 0)
+    if ((info->nodes & 2047) == 0)
     {
         checkUp(info);
     }
@@ -183,7 +182,7 @@ static int alphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
     int legal = 0;
     int oldAlpha = alpha;
     int bestMove = NOMOVE;
-    int score = -INFINITY;
+    int score = -CHESS_INFINITY;
     int pvMove = probePvTable(pos);
 
     if (pvMove != NOMOVE)
@@ -252,7 +251,7 @@ static int alphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
 void searchPosition(S_BOARD *pos, S_SEARCHINFO *info)
 {
     int bestMove = NOMOVE;
-    int bestScore = -INFINITY;
+    int bestScore = -CHESS_INFINITY;
     int currentDepth = 0;
     int pvMoves = 0;
 
@@ -260,7 +259,7 @@ void searchPosition(S_BOARD *pos, S_SEARCHINFO *info)
 
     for (currentDepth = 1; currentDepth <= info->depth; ++currentDepth)
     {
-        bestScore = alphaBeta(-INFINITY, INFINITY, currentDepth, pos, info, true);
+        bestScore = alphaBeta(-CHESS_INFINITY, CHESS_INFINITY, currentDepth, pos, info, true);
 
         if (info->stopped) break;
 
@@ -276,11 +275,11 @@ void searchPosition(S_BOARD *pos, S_SEARCHINFO *info)
             int move = pos->pvArray[pvNum];
             std::cout << prMove(move) << " ";
         }
-        printf("\n");
+        std::cout << std::endl;
         // std::cout <<"MoveOrdering: " <<std::setprecision(2) << (info->fhf / info->fh)<< std::endl;
     }
     //info score cp 13  depth 1 nodes 13 time 15 pv f1b5
-    std::cout << "bestMove " << prMove(bestMove) << std::endl;
+    std::cout << "bestmove " << prMove(bestMove) << std::endl;
 }
 
 

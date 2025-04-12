@@ -59,7 +59,8 @@ int parseMove(const std::string& move_string, S_BOARD* pos)
 
     for (int moveNum = 0; moveNum < movelist[0].count; moveNum++)
     {
-        if (int move = movelist->moves[moveNum].move; FROMSQ(move) == from and TOSQ(move) == to)
+        int move = movelist->moves[moveNum].move;
+        if (FROMSQ(move) == from and TOSQ(move) == to)
         {
             int promPce = PROMOTED(move);
             if (promPce != EMPTY)
