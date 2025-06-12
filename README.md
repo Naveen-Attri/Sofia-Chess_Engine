@@ -34,10 +34,10 @@ Make sure you have `g++` that supports **C++17** (e.g., version 8 or higher). Yo
 ```
 git clone https_repo_link
 cd projectDir/src
-g++ -std=c++17 -O3 -static -o sofia *.cpp
+g++ -std=c++17 -O3 -o sofia *.cpp
 ```
 
-*NOTE*: sometimes you may encounter the error: "The code execution cannot proceed because libewinpthread-1.dll" was not found. Reinstalling the program may fix this problem."
+*NOTE*: sometimes you may encounter the error: ``` "The code execution cannot proceed because libewinpthread-1.dll" was not found. Reinstalling the program may fix this problem." ```
 then use this command instead
 
 ```
